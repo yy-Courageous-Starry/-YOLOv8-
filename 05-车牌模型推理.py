@@ -1,7 +1,7 @@
 # 1. 导入YOLO类
 from ultralytics import YOLO
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # 2. 加载模型---自己训练的best.pt
     model = YOLO(r"D:\workspace\人工智能-yolo目标检测\yolo26\runs\detect\train\weights\best.pt")
 
@@ -16,6 +16,5 @@ if __name__ == '__main__':
         source=r"D:\workspace\人工智能-yolo目标检测\yolo26\datasets\car\test\images\04-90_267-207&511_555&616-550&605_211&616_207&515_555&511-0_0_3_1_26_30_31_30-68-81.jpg",  # 统一D盘路径
         save=True,
         show=True,
-        device=0  # 用GPU推理，和验证时保持一致
+        device=0,  # 用GPU推理，和验证时保持一致
     )
-

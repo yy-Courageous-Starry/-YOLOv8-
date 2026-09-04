@@ -1,12 +1,11 @@
-#1.导入YOLO类
+# 1.导入YOLO类
 from ultralytics import YOLO
 
+if __name__ == "__main__":
+    # 2.加载模型---迁移学习【基于yolo26.pt预训练模型】
+    model = YOLO("yolo26n.pt")
 
-if __name__ == '__main__' :
-    #2.加载模型---迁移学习【基于yolo26.pt预训练模型】
-    model = YOLO('yolo26n.pt')
-
-    #3.调用train方法训练模型
+    # 3.调用train方法训练模型
     """
     train方法的参数一样可以在官网参考手册找到，掌握的如下：
         1.data:训练数据集的访问路径的配置文件的访问路径，即car，yaml
@@ -20,5 +19,5 @@ if __name__ == '__main__' :
         epochs=100,
         batch=12,
         device=0,
-        workers=4
+        workers=4,
     )

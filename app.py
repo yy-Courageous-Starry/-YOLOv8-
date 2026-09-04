@@ -1,10 +1,12 @@
 # 使用streamlit构建web应用
 # 1、导入streamlit库
-import streamlit as st
-import time
-from ultralytics import YOLO
-import pymysql
 import os
+import time
+
+import pymysql
+import streamlit as st
+
+from ultralytics import YOLO
 
 # -------------------------- 初始化session_state --------------------------
 if "is_login" not in st.session_state:
@@ -18,11 +20,7 @@ if "current_page" not in st.session_state:
 # -------------------------- 数据库连接 --------------------------
 def get_db_connection():
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="Yuan13888057275",
-        database="yolo26",
-        charset="utf8mb4"
+        host="localhost", user="root", password="Yuan13888057275", database="yolo26", charset="utf8mb4"
     )
 
 
@@ -37,13 +35,13 @@ def verify_user(username, password):
         conn.close()
         return result is not None
     except Exception as e:
-        st.error(f"数据库连接错误：{str(e)}")
+        st.error(f"数据库连接错误：{e!s}")
         return False
 
 
 # -------------------------- 登录页面 --------------------------
 def login_page():
-    col1, col2, col3 = st.columns([1, 2, 1])
+    _col1, col2, _col3 = st.columns([1, 2, 1])
     with col2:
         st.write("欢迎登录")
         with st.form("login_form"):

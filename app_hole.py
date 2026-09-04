@@ -1,22 +1,19 @@
-import streamlit as st
-import time
 import os
-from ultralytics import YOLO
-from PIL import Image
+import time
+
 import pymysql
+import streamlit as st
+
+from ultralytics import YOLO
 
 # ========== 页面配置 ==========
-st.set_page_config(
-    page_title="道路坑洞智能检测系统",
-    page_icon="🛣️",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+st.set_page_config(page_title="道路坑洞智能检测系统", page_icon="🛣️", layout="wide", initial_sidebar_state="expanded")
 
 
 # ========== 灰蓝配色像素风 CSS（含白色高亮） ==========
 def inject_pixel_css():
-    st.markdown("""
+    st.markdown(
+        """
     <style>
     /* 全局灰蓝像素风 */
     @import url('https://fonts.googleapis.com/css2?family=Press+Start-2P&family=VT323&display=swap');
@@ -155,20 +152,19 @@ def inject_pixel_css():
         font-weight: bold;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 # 注入css
 inject_pixel_css()
 
+
 # ========== 数据库连接（第一段代码） ==========
 def get_db_connection():
     return pymysql.connect(
-        host="localhost",
-        user="root",
-        password="Yuan13888057275",
-        database="yolo26",
-        charset="utf8mb4"
+        host="localhost", user="root", password="Yuan13888057275", database="yolo26", charset="utf8mb4"
     )
 
 
@@ -183,7 +179,7 @@ def verify_user(username, password):
         conn.close()
         return result is not None
     except Exception as e:
-        st.error(f"数据库连接错误：{str(e)}")
+        st.error(f"数据库连接错误：{e!s}")
         return False
 
 
@@ -210,12 +206,12 @@ def display_with_pixel_frame(image, caption="", key=None):
     with col_frame:
         st.markdown('<div class="pixel-frame">', unsafe_allow_html=True)
         st.image(image, caption=caption, width="stretch")
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 # ========== 登录页面（数据库验证） ==========
 def login_page():
-    col1, col2, col3 = st.columns([1, 2, 1])
+    _col1, col2, _col3 = st.columns([1, 2, 1])
     with col2:
         st.markdown("## 登录终端")
         st.markdown("---")
@@ -237,12 +233,15 @@ def login_page():
                     time.sleep(1.5)
                     err.empty()
 
-        st.markdown("""
+        st.markdown(
+            """
         <div style='text-align:center; margin-top:30px; padding-top:10px; border-top:1px dashed #4a6f8f;'>
             <span style='color:#8aacc8; font-family:VT323; font-size:16px;'>小组成员： 袁源 | 王梓越 | 高睿  </span><br>
             <span style='color:#8aacc8; font-family:VT323; font-size:16px;'> 杨欣子 | 贺紫妍 | 铁盛达 </span><br>
         </div>
-        """, unsafe_allow_html=True)
+        """,
+            unsafe_allow_html=True,
+        )
 
 
 # ========== 系统首页 ==========
@@ -250,11 +249,14 @@ def home_page():
     st.markdown("## 坑洞检测系统")
     st.markdown("---")
     st.markdown(f"### 欢迎回来，用户  {st.session_state.login_username}")
-    st.markdown("""
+    st.markdown(
+        """
     <div style="background:#1a2530; border:2px solid #4a6f8f; padding:12px; font-family:VT323; color:#ffffff; font-weight:bold;">
     系统已就绪，请前往左侧菜单进行图片检测
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 # ========== 图片检测页面（路径完全使用第一段） ==========
@@ -304,7 +306,7 @@ def img_detect_page():
                     status.update(label="🎉 检测任务已完成！", state="complete", expanded=False)
 
                 except Exception as e:
-                    status.update(label=f"检测失败: {str(e)}", state="error")
+                    status.update(label=f"检测失败: {e!s}", state="error")
                     st.error("检测失败，请检查图像或模型配置")
     else:
         st.info("等待上传图像...")
